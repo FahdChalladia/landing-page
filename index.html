@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Better Life | Portfolio Project</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #111827;
+      --accent-2: #f59e0b;
+      --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(246, 244, 239, 0.9);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+    }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 0;
+    }
+    .brand {
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      font-size: 1.1rem;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .nav a:hover { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid transparent;
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      border-color: var(--line);
+      color: var(--text);
+    }
+    .btn-outline:hover { background: white; }
+
+    .hero {
+      padding: 72px 0 40px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      margin: 0;
+    }
+    .lead {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 58ch;
+      margin: 18px 0 26px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 32px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .hero-card img {
+      width: 100%;
+      height: 540px;
+      object-fit: cover;
+      border-radius: 24px;
+    }
+    .hero-badge {
+      position: absolute;
+      left: 34px;
+      top: 34px;
+      background: rgba(17, 24, 39, 0.9);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    section {
+      padding: 36px 0 20px;
+    }
+    .section-title {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      letter-spacing: -0.04em;
+    }
+    .section-subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+    }
+    .card-body { padding: 22px; }
+    .feature-img {
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
+      background: #ddd;
+    }
+    .feature-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+    .feature-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #111827;
+      color: white;
+      flex: 0 0 auto;
+    }
+    .feature-text { margin: 0; color: var(--muted); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .about-box {
+      padding: 26px;
+    }
+    .about-note {
+      background: #fff8e7;
+      border: 1px solid #fde68a;
+      padding: 14px 16px;
+      border-radius: 18px;
+      margin-top: 18px;
+      color: #92400e;
+      font-size: 0.95rem;
+    }
+    .links-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .member {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: white;
+    }
+    .member-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .member-name { font-weight: 800; margin: 0; }
+    .member-role { color: var(--muted); font-size: 0.92rem; margin: 4px 0 0; }
+    .socials {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .social {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 0.9rem;
+      color: var(--text);
+      background: white;
+    }
+    .social:hover { background: #f9fafb; }
+
+    .deliverables {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .deliverable {
+      padding: 22px;
+      border-radius: 22px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+    }
+    .deliverable h3 { margin: 0 0 8px; }
+    .deliverable p { margin: 0; color: var(--muted); }
+
+    footer {
+      padding: 34px 0 52px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid, .feature-grid, .about-grid, .deliverables { grid-template-columns: 1fr; }
+      .hero-card img { height: 360px; }
+      .topbar-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">Better Life</div>
+      <nav class="nav">
+        <a href="#intro">Intro</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#deliverables">Deliverables</a>
+      </nav>
+      <a class="btn btn-primary" href="https://your-deployed-app-link.com" target="_blank" rel="noreferrer">Open App →</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="intro">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Holberton School Portfolio Project</div>
+          <h1>Better Life</h1>
+          <p class="lead">A mood tracker that helps users log daily feelings, detect weekly patterns, and reflect on progress with clarity instead of guesswork.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://your-deployed-app-link.com" target="_blank" rel="noreferrer">Go to Deployed App</a>
+            <a class="btn btn-outline" href="https://github.com/your-org/better-life" target="_blank" rel="noreferrer">GitHub Repository</a>
+          </div>
+          <div class="pills">
+            <span class="pill">Daily mood entry</span>
+            <span class="pill">Weekly insights</span>
+            <span class="pill">Private profile</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-badge">Main cover image</div>
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80" alt="Person working with laptop" />
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <h2 class="section-title">3 key features</h2>
+        <p class="section-subtitle">The page must show the main value of the project before the visitor reaches the app itself.</p>
+
+        <div class="feature-grid">
+          <article class="card">
+            <img class="feature-img" src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=80" alt="Mood tracking image" />
+            <div class="card-body">
+              <h3 class="feature-name"><span class="feature-icon">1</span> Daily Mood Check-in</h3>
+              <p class="feature-text">Users log one mood per day with a short note, making the app fast, focused, and easy to use.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="feature-img" src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80" alt="Analytics dashboard image" />
+            <div class="card-body">
+              <h3 class="feature-name"><span class="feature-icon">2</span> Weekly Insights</h3>
+              <p class="feature-text">The app shows the week at a glance with averages, trends, and mood distribution so patterns are obvious.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="feature-img" src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80" alt="Profile settings image" />
+            <div class="card-body">
+              <h3 class="feature-name"><span class="feature-icon">3</span> Secure Profile Settings</h3>
+              <p class="feature-text">Users can manage profile data and credentials in a clean authenticated area with account controls.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <article class="card about-box">
+          <h2 class="section-title">About the project</h2>
+          <p class="section-subtitle" style="margin-bottom: 0;">
+            Better Life was inspired by a simple problem: people remember the highlight of a week, but not the emotional pattern behind it. A quick daily log turns vague memory into something measurable. This project was built as a Holberton School Portfolio Project, and it focuses on helping users understand themselves through small, consistent check-ins.
+          </p>
+          <div class="about-note">
+            Replace the example story only if your team wants a different personal inspiration. The project should not say it exists just because school required it.
+          </div>
+          <div style="margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a class="btn btn-primary" href="https://github.com/your-org/better-life" target="_blank" rel="noreferrer">Open Repository</a>
+            <a class="btn btn-outline" href="https://youtube.com/your-demo-video" target="_blank" rel="noreferrer">Watch YouTube Demo</a>
+          </div>
+        </article>
+
+        <aside class="card about-box">
+          <h2 class="section-title" style="font-size: 1.8rem;">Team links</h2>
+          <div class="links-grid">
+            <div class="member">
+              <div class="member-top">
+                <div>
+                  <p class="member-name">Fahd Challadia</p>
+                  <p class="member-role">Frontend / Backend</p>
+                </div>
+              </div>
+              <div class="socials">
+                <a class="social" href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="social" href="https://github.com/your-github" target="_blank" rel="noreferrer">GitHub</a>
+                <a class="social" href="https://twitter.com/your-twitter" target="_blank" rel="noreferrer">Twitter</a>
+              </div>
+            </div>
+
+            <div class="member">
+              <div class="member-top">
+                <div>
+                  <p class="member-name">Team Member 2</p>
+                  <p class="member-role">UI / UX</p>
+                </div>
+              </div>
+              <div class="socials">
+                <a class="social" href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="social" href="https://github.com/your-github" target="_blank" rel="noreferrer">GitHub</a>
+                <a class="social" href="https://twitter.com/your-twitter" target="_blank" rel="noreferrer">Twitter</a>
+              </div>
+            </div>
+
+            <div class="member">
+              <div class="member-top">
+                <div>
+                  <p class="member-name">Team Member 3</p>
+                  <p class="member-role">API / Logic</p>
+                </div>
+              </div>
+              <div class="socials">
+                <a class="social" href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="social" href="https://github.com/your-github" target="_blank" rel="noreferrer">GitHub</a>
+                <a class="social" href="https://twitter.com/your-twitter" target="_blank" rel="noreferrer">Twitter</a>
+              </div>
+            </div>
+
+            <div class="member">
+              <div class="member-top">
+                <div>
+                  <p class="member-name">Team Member 4</p>
+                  <p class="member-role">Testing / Docs</p>
+                </div>
+              </div>
+              <div class="socials">
+                <a class="social" href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="social" href="https://github.com/your-github" target="_blank" rel="noreferrer">GitHub</a>
+                <a class="social" href="https://twitter.com/your-twitter" target="_blank" rel="noreferrer">Twitter</a>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="deliverables">
+      <div class="container">
+        <h2 class="section-title">Deliverables</h2>
+        <p class="section-subtitle">These are the exact things the project asks for at the end.</p>
+        <div class="deliverables">
+          <div class="deliverable">
+            <h3>Landing Page URL</h3>
+            <p>Replace with the GitHub Pages or live hosting link for this page.</p>
+          </div>
+          <div class="deliverable">
+            <h3>YouTube Demo Video</h3>
+            <p>Record the app demo and paste the public YouTube link here and above.</p>
+          </div>
+          <div class="deliverable">
+            <h3>Manual QA Review</h3>
+            <p>Request the peer/TA review after the page is deployed and working.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Better Life — Portfolio Project Landing Page
+    </div>
+  </footer>
+</body>
+</html>
